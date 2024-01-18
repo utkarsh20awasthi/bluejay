@@ -2,22 +2,19 @@ const fs = require("fs");
 const csv = require("csv-parser");
 
 function analyzeFile(filePath) {
-  // Array to store shifts from CSV
+ 
   const shifts = [];
 
-  // Read the CSV file
   fs.createReadStream(filePath)
     .pipe(csv())
     .on("data", (row) => {
       shifts.push(row);
     })
     .on("end", () => {
-      // Objects to store employees meeting each condition
       const sevenConsecutiveDays = {};
       const lessThan10HoursBetweenShifts = {};
       const moreThan14HoursInSingleShift = {};
 
-      // Analyze shifts for each employee
       shifts.forEach((shift) => {
         // Store shifts for each employee
         const employee = shift["Employee Name"];
@@ -81,7 +78,6 @@ Employees who have worked for more than 14 hours in a single shift: ${employeesW
     });
 }
 
-// Assuming the input file is named project.csv
 const filePath = "project.csv";
 analyzeFile(filePath);
 
